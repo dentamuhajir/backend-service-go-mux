@@ -1,0 +1,8 @@
+How to install package
+
+go get -u <package-name>
+ex:
+    go get -u github.com/gorilla/mux
+
+Note:
+ https://www.youtube.com/watch?v=7VLmLOiQ3ck
