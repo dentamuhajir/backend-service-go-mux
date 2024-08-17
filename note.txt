@@ -6,3 +6,9 @@ ex:
 
 Note:
  https://www.youtube.com/watch?v=7VLmLOiQ3ck
+
+// Run all instance in folder
+ go run ./cmd
+
+ // To undo last commit
+ git reset --soft HEAD~1
