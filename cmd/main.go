@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/dentamuhajir/backend-service-go-mysql/cmd/api"
+	"github.com/dentamuhajir/backend-service-go-mysql/config"
 	"github.com/dentamuhajir/backend-service-go-mysql/db"
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
@@ -11,10 +12,10 @@ import (
 func main() {
 
 	dbase, err := db.NewMySQLStorage(mysql.Config{
-		User:                 "root",
-		Passwd:               "",
-		Addr:                 "127.0.0.1:3306",
-		DBName:               "godb",
+		User:                 config.Envs.DBUser,
+		Passwd:               config.Envs.DBPassword,
+		Addr:                 config.Envs.DBAddress,
+		DBName:               config.Envs.DBName,
 		Net:                  "tcp",
 		AllowNativePasswords: true,
 		ParseTime:            true,

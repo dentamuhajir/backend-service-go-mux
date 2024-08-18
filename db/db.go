@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"github.com/go-sql-driver/mysql"
+	"log"
 )
 
 // private is lowercase , public is uppercase
@@ -17,6 +18,8 @@ func NewMySQLStorage(cfg mysql.Config) (*sql.DB, error) {
 		db.Close() // Ensure the connection is closed if Ping fails
 		return nil, err
 	}
+
+	log.Println("\nDatabase successfully connected => ", cfg.FormatDSN())
 
 	return db, err
 }
