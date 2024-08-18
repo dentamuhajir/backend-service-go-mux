@@ -12,3 +12,31 @@ Note:
 
  // To undo last commit
  git reset --soft HEAD~1
+
+ // Golang Migrate
+ https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
+ $ brew install golang-migrate
+
+
+ // DB Scheme
+ -- Create the database if it doesn't exist
+ CREATE DATABASE IF NOT EXISTS godb;
+
+ -- Use the database
+ USE godb;
+
+ -- Create the 'articles' table
+ CREATE TABLE IF NOT EXISTS articles (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     title VARCHAR(255) NOT NULL,
+     body TEXT NOT NULL,
+     published BOOLEAN NOT NULL DEFAULT FALSE,
+     category_id INT NOT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+
+ -- Optional: Insert some example data
+ INSERT INTO articles (title, body, published, category_id) VALUES
+ ('First Article', 'This is the body of the first article.', true, 1),
+ ('Second Article', 'This is the body of the second article.', false, 2);

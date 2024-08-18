@@ -1,6 +1,7 @@
 package article
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/dentamuhajir/backend-service-go-mysql/models"
@@ -9,15 +10,45 @@ import (
 )
 
 type Handler struct {
+	db *sql.DB
 }
 
-func NewHandler() *Handler {
-	return &Handler{}
+func NewHandler(db *sql.DB) *Handler {
+	return &Handler{db: db}
 }
 
 func (handler *Handler) RegisterRoute(router *mux.Router) {
-	router.HandleFunc("/article", handler.handlerArticle).Methods("GET")
+	router.HandleFunc("/article", handler.getArticle).Methods("GET")
+}
 
+func (handler *Handler) getArticle(w http.ResponseWriter, r *http.Request) {
+	rows, err := handler.db.Query("SELECT id, title, body, published, category_id FROM articles")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var articles []models.Article
+	for rows.Next() {
+		var article models.Article
+		if err := rows.Scan(&article.ID, &article.Title, &article.Body, &article.Published, &article.CategoryID); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		articles = append(articles, article)
+	}
+
+	// Check for errors from iterating over rows.
+	if err := rows.Err(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(articles); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (handler *Handler) handlerArticle(w http.ResponseWriter, r *http.Request) {
