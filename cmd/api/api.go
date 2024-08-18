@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"github.com/dentamuhajir/backend-service-go-mysql/service/article"
 	"github.com/dentamuhajir/backend-service-go-mysql/service/user"
 	"github.com/gorilla/mux"
 	"log"
@@ -25,6 +26,8 @@ func (s *APIServer) Start() error {
 	router := mux.NewRouter()
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 	userHandler := user.NewHandler()
+	articleHandler := article.NewHandler()
+	articleHandler.RegisterRoute(subrouter)
 	userHandler.RegisterRoutes(subrouter)
 	log.Println("Starting API server", s.addr)
 	return http.ListenAndServe(s.addr, router)
