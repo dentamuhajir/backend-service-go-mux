@@ -6,4 +6,5 @@ type Article struct {
 	Body       string `json:"body" db:"body"`
 	Published  bool   `json:"published" db:"published"`
 	CategoryID int    `json:"category_id" db:"category_id"`
+	Slug       string `json:"slug"`
 }

@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/dentamuhajir/backend-service-go-mysql/models"
-	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/dentamuhajir/backend-service-go-mysql/models"
+	"github.com/dentamuhajir/backend-service-go-mysql/utils"
+	"github.com/gorilla/mux"
 )
 
 type Handler struct {
@@ -32,10 +34,20 @@ func (handler *Handler) getArticle(w http.ResponseWriter, r *http.Request) {
 	var articles []models.Article
 	for rows.Next() {
 		var article models.Article
-		if err := rows.Scan(&article.ID, &article.Title, &article.Body, &article.Published, &article.CategoryID); err != nil {
+		// reading for the row of queryp
+		if err := rows.Scan(
+			&article.ID,
+			&article.Title,
+			&article.Body,
+			&article.Published,
+			&article.CategoryID,
+		); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
+		article.Slug = utils.GenerateSlug(article.Title)
+
 		articles = append(articles, article)
 	}
 
