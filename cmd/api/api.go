@@ -2,11 +2,12 @@ package api
 
 import (
 	"database/sql"
+	"log"
+	"net/http"
+
 	"github.com/dentamuhajir/backend-service-go-mysql/service/article"
 	"github.com/dentamuhajir/backend-service-go-mysql/service/user"
 	"github.com/gorilla/mux"
-	"log"
-	"net/http"
 )
 
 type APIServer struct {
@@ -26,7 +27,10 @@ func (s *APIServer) Start() error {
 	router := mux.NewRouter()
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 	userHandler := user.NewHandler()
-	articleHandler := article.NewHandler(s.db)
+
+	articleRepository := article.NewArticleRepository(s.db)
+	articleService := article.NewArticleService(*articleRepository)
+	articleHandler := article.NewHandler(*articleService, s.db)
 	articleHandler.RegisterRoute(subrouter)
 	userHandler.RegisterRoutes(subrouter)
 	log.Println("Starting API server", s.addr)
