@@ -2,12 +2,12 @@ package article
 
 import (
 	"database/sql"
+
 	"github.com/dentamuhajir/backend-service-go-mysql/models"
 	"github.com/dentamuhajir/backend-service-go-mysql/utils"
-	
 )
 
-type ArticleRepository struct{
+type ArticleRepository struct {
 	db *sql.DB
 }
 
@@ -15,10 +15,30 @@ func NewArticleRepository(db *sql.DB) *ArticleRepository {
 	return &ArticleRepository{db}
 }
 
-func (r ArticleRepository) getArticle() ([]models.Article , error){
+func (r ArticleRepository) insertArticle(requestBody models.Article) string {
+	stmt, err := r.db.Prepare("INSERT INTO articles(id, title, body, published, category_id) VALUES (?,?,?,?,?)")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer stmt.Close()
+
+	stmt.Exec(
+		requestBody.ID,
+		requestBody.Title,
+		requestBody.Body,
+		requestBody.Published,
+		requestBody.CategoryID,
+	)
+
+	return "Insert Article Successfull"
+}
+
+func (r ArticleRepository) getArticle() ([]models.Article, error) {
 	rows, err := r.db.Query("SELECT id, title, body, published, category_id FROM articles")
 	if err != nil {
-		return nil , err
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -42,8 +62,4 @@ func (r ArticleRepository) getArticle() ([]models.Article , error){
 	}
 
 	return articles, err
-} 
-
-
-
-
+}

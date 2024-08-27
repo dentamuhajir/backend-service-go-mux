@@ -3,6 +3,7 @@ package article
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/dentamuhajir/backend-service-go-mysql/models"
@@ -20,6 +21,26 @@ func NewHandler(service ArticleService, db *sql.DB) *Handler {
 
 func (handler *Handler) RegisterRoute(router *mux.Router) {
 	router.HandleFunc("/article", handler.getArticle).Methods("GET")
+	router.HandleFunc("/article/create", handler.postArticle).Methods("GET")
+}
+
+func (handler *Handler) postArticle(w http.ResponseWriter, r *http.Request) {
+	// get body
+	// then sent in to service
+	// then execute into repository
+
+	requestBody := models.Article{
+		ID:         3,
+		Title:      "Testing insert data",
+		Body:       "Testing insert data",
+		Published:  true,
+		CategoryID: 2,
+		Slug:       "testing-insert-data",
+	}
+
+	handler.service.postArticle(requestBody)
+
+	log.Println(requestBody)
 }
 
 func (handler *Handler) getArticle(w http.ResponseWriter, r *http.Request) {
