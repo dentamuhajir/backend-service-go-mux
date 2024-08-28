@@ -15,7 +15,7 @@ func NewArticleRepository(db *sql.DB) *ArticleRepository {
 	return &ArticleRepository{db}
 }
 
-func (r ArticleRepository) insertArticle(requestBody models.Article) string {
+func (r ArticleRepository) insertArticle(requestBody models.Article) (string, error) {
 	stmt, err := r.db.Prepare("INSERT INTO articles(id, title, body, published, category_id) VALUES (?,?,?,?,?)")
 
 	if err != nil {
@@ -32,7 +32,11 @@ func (r ArticleRepository) insertArticle(requestBody models.Article) string {
 		requestBody.CategoryID,
 	)
 
-	return "Insert Article Successfull"
+	var response string = ""
+	response = "Insert Article Successfull"
+
+	return response, err
+
 }
 
 func (r ArticleRepository) getArticle() ([]models.Article, error) {

@@ -1,8 +1,6 @@
 package article
 
 import (
-	"log"
-
 	"github.com/dentamuhajir/backend-service-go-mysql/models"
 	"github.com/dentamuhajir/backend-service-go-mysql/utils"
 )
@@ -15,14 +13,13 @@ func NewArticleService(articleRepository ArticleRepository) *ArticleService {
 	return &ArticleService{articleRepository}
 }
 
-func (s ArticleService) postArticle(requestBody models.Article) string {
-	message := s.articleRepository.insertArticle(requestBody)
+func (s ArticleService) postArticle(requestBody models.Article) (string, error) {
+	ResponseMessage, err := s.articleRepository.insertArticle(requestBody)
 
-	log.Println(message)
-	// if err != nil {
-	// 	return nil
-	// }
-	return message
+	if err != nil {
+		return "", err
+	}
+	return ResponseMessage, err
 }
 
 func (s ArticleService) getArticle() []models.Article {

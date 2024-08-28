@@ -25,12 +25,9 @@ func (handler *Handler) RegisterRoute(router *mux.Router) {
 }
 
 func (handler *Handler) postArticle(w http.ResponseWriter, r *http.Request) {
-	// get body
-	// then sent in to service
-	// then execute into repository
 
 	requestBody := models.Article{
-		ID:         3,
+		ID:         90,
 		Title:      "Testing insert data",
 		Body:       "Testing insert data",
 		Published:  true,
@@ -38,9 +35,16 @@ func (handler *Handler) postArticle(w http.ResponseWriter, r *http.Request) {
 		Slug:       "testing-insert-data",
 	}
 
-	handler.service.postArticle(requestBody)
+	message, err := handler.service.postArticle(requestBody)
 
-	log.Println(requestBody)
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(message); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (handler *Handler) getArticle(w http.ResponseWriter, r *http.Request) {
@@ -50,30 +54,3 @@ func (handler *Handler) getArticle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
-
-// func (handler *Handler) handlerArticle(w http.ResponseWriter, r *http.Request) {
-// 	var article []models.Article
-// 	article = []models.Article{
-// 		{
-// 			ID:         1,
-// 			Title:      "Article 1",
-// 			Body:       "Body 1",
-// 			Published:  true,
-// 			CategoryID: 1,
-// 		}, {
-// 			ID:         2,
-// 			Title:      "Article 2",
-// 			Body:       "Body 2",
-// 			Published:  true,
-// 			CategoryID: 1,
-// 		},
-// 	}
-
-// 	out, err := json.Marshal(article)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	w.Write(out)
-// }
