@@ -2,8 +2,9 @@ package db
 
 import (
 	"database/sql"
-	"github.com/go-sql-driver/mysql"
 	"log"
+
+	"github.com/go-sql-driver/mysql"
 )
 
 // private is lowercase , public is uppercase
@@ -21,5 +22,6 @@ func NewMySQLStorage(cfg mysql.Config) (*sql.DB, error) {
 
 	log.Println("\nDatabase successfully connected => ", cfg.FormatDSN())
 
+	// migrate -database "mysql://root@tcp(127.0.0.1:3306)/godb" -path db/migrations up
 	return db, err
 }

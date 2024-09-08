@@ -49,5 +49,7 @@ go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
 migrate create -ext sql -dir db/migrations/ create_table_user
 
+migrate -database "mysql://root@tcp(127.0.0.1:3306)/godb" -path db/migrations up
+
 gopath
 Users/dentamuhajir/go
