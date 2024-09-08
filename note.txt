@@ -40,3 +40,14 @@ Note:
  INSERT INTO articles (title, body, published, category_id) VALUES
  ('First Article', 'This is the body of the first article.', true, 1),
  ('Second Article', 'This is the body of the second article.', false, 2);
+
+-- Create Collection Golang
+
+
+-- Golang Migrate
+go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+migrate create -ext sql -dir db/migrations/ create_table_user
+
+gopath
+Users/dentamuhajir/go
