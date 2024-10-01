@@ -26,11 +26,12 @@ func NewAPIServer(addr string, db *sql.DB) *APIServer {
 
 func (s *APIServer) Start() error {
 	router := mux.NewRouter()
+
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
 	userRepository 	:= repository.NewUserRepository(s.db)
-	userService 	:= service.NewUserService(*userRepository)
-	userHandler 	:= handler.NewUserHandler(*userService)
+	userService 	  := service.NewUserService(*userRepository)
+	userHandler 	  := handler.NewUserHandler(*userService)
 	userHandler.RegisterRoute(subrouter)
 
 	log.Println("Starting API server", s.addr)
