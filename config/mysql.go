@@ -15,17 +15,17 @@ type Config struct {
 	DBName     string
 }
 
-var Envs = InitConfig()
+var MysqlConnection = InitConfig()
 
 func InitConfig() *Config {
 	godotenv.Load()
 	return &Config{
-		PublicHost: getEnv("PUBLIC_HOST", "http://localhost"),
-		Port:       getEnv("PORT", "8080"),
-		DBUser:     getEnv("DB_USER", "root"),
+		PublicHost: getEnv("PUBLIC_HOST", ""),
+		Port:       getEnv("PORT", ""),
+		DBUser:     getEnv("DB_USER", ""),
 		DBPassword: getEnv("DB_PASSWORD", ""),
-		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_ADDRESS", "127.0.0.1"), getEnv("DB_PORT", "3306")),
-		DBName:     getEnv("DB_NAME", "goservice"),
+		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_ADDRESS", ""), getEnv("DB_PORT", "")),
+		DBName:     getEnv("DB_NAME", ""),
 	}
 }
 

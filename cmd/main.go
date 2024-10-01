@@ -13,10 +13,10 @@ import (
 func main() {
 	database, err := database.NewMySQLConnection(
 		mysql.Config{
-			User:                 config.Envs.DBUser,
-			Passwd:               config.Envs.DBPassword,
-			Addr:                 config.Envs.DBAddress,
-			DBName:               config.Envs.DBName,
+			User:                 config.MysqlConnection.DBUser,
+			Passwd:               config.MysqlConnection.DBPassword,
+			Addr:                 config.MysqlConnection.DBAddress,
+			DBName:               config.MysqlConnection.DBName,
 			Net:                  "tcp",
 			AllowNativePasswords: true,
 			ParseTime:            true,
