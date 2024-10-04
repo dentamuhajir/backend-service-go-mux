@@ -24,10 +24,12 @@ func (h *UserHandler) RegisterRoute(router *mux.Router) {
 }
 
 func (h *UserHandler) getListUsers(w http.ResponseWriter, r *http.Request) {
-	resp := make(map[string]string)
-	resp["message"] = "Hello World"
+	users, err := h.userService.GetListUser();
+	if err != nil {
+		log.Fatalf("error handling User service. Err: %v", err)
+	}
 
-	jsonResp, err := json.Marshal(resp)
+	jsonResp, err := json.Marshal(users)
 	if err != nil {
 		log.Fatalf("error handling JSON marshal. Err: %v", err)
 	}

@@ -30,6 +30,7 @@ func (r UserRepository) GetUser() ([]model.User, error) {
 			&user.Username,
 			&user.Password,
 			&user.Email,
+			&user.CreatedAt,
 		)
 		if err != nil {
 			return nil, err
