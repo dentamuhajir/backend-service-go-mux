@@ -15,7 +15,7 @@ func NewArticleRepository(db *sql.DB) *ArticleRepository {
 }
 
 func (r ArticleRepository) GetArticleList() ([]model.Article, error) {
-	query := "SELECT * FROM article"
+	query := "SELECT id, title, author, category, content_body, photo, photographer, published_date title FROM articles"
 	rows, err := r.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -34,6 +34,9 @@ func (r ArticleRepository) GetArticleList() ([]model.Article, error) {
 			&article.Photo,
 			&article.Photographer,
 			&article.PublishedDate,
+			//&article.IsPublished,
+			// &article.CreatedAt,
+			// &article.UpdatedAt,
 		)
 		if err != nil {
 			return nil, err
