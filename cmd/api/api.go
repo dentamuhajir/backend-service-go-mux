@@ -34,6 +34,11 @@ func (s *APIServer) Start() error {
 	userHandler 	  := handler.NewUserHandler(*userService)
 	userHandler.RegisterRoute(subrouter)
 
+	articleRepository := repository.NewArticleRepository(s.db)
+	articleService := service.NewArticleService(*articleRepository)
+	articleHandler := handler.NewArticleHandler(*articleService)
+	articleHandler.RegisterRoute(subrouter)
+
 	log.Println("Starting API server", s.addr)
 	return http.ListenAndServe(s.addr, router)
 }
