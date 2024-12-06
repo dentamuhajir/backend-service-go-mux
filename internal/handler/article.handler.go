@@ -40,6 +40,7 @@ func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) 
 
 func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	articles, err := h.articleService.GetHeadlineArticle()
 	if err != nil {
 		log.Fatalf("error handling headline article. Err: %v", err)
