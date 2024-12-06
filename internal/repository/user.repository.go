@@ -14,6 +14,7 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{db}
 }
 
+
 func (r UserRepository) GetUser() ([]model.User, error) {
 	query := "SELECT * FROM user"
 	rows, err := r.db.Query(query)
