@@ -15,6 +15,10 @@ func NewArticleService(r repository.ArticleRepository) *ArticleService {
 	}
 }
 
-func (s ArticleService) GetListArticle() ([] model.Article, error) {
+func (s ArticleService) GetListArticle() ([]model.Article, error) {
 	return s.articleRepository.GetArticleList()
+}
+
+func (s ArticleService) GetHeadlineArticle() ([]model.Article, error) {
+	return s.articleRepository.GetHeadlineArticle()
 }

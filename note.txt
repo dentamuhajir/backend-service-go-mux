@@ -53,3 +53,7 @@ migrate -database "mysql://root@tcp(127.0.0.1:3306)/godb" -path db/migrations up
 
 gopath
 Users/dentamuhajir/go
+
+-- Golang Model 
+Reference 
+https://dev.to/lucasnevespereira/write-a-rest-api-in-golang-following-best-practices-pe9
