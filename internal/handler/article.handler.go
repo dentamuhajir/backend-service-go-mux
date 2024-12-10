@@ -22,6 +22,7 @@ func NewArticleHandler(s service.ArticleService) *ArticleHandler {
 func (h *ArticleHandler) RegisterRoute(router *mux.Router) {
 	router.HandleFunc("/article", h.getListArticle).Methods("GET")
 	router.HandleFunc("/article/headline", h.getHeadlineArticle).Methods("GET")
+	router.HandleFunc("/article/categories", h.getArticleByCategory).Methods("GET")
 }
 
 func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +49,19 @@ func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Reque
 
 	error := json.NewEncoder(w).Encode(articles)
 	if error != nil {
-		log.Fatalf("error handling JSON Encode. Err: %v", err)
+		log.Fatalf("Error handling JSON Encode. Err: %v", err)
+	}
+}
+
+func (h *ArticleHandler) getArticleByCategory(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	articles, err := h.articleService.GetListArticleGroupByCategory()
+	if err != nil {
+		log.Fatalf("Error handling Article by categories. Err: %v", err)
+	}
+	error := json.NewEncoder(w).Encode(articles)
+	if error != nil {
+		log.Fatalf("Error handling JSON Encode: %v", err)
 	}
 }
