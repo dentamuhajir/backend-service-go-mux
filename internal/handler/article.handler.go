@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -23,6 +24,16 @@ func (h *ArticleHandler) RegisterRoute(router *mux.Router) {
 	router.HandleFunc("/article", h.getListArticle).Methods("GET")
 	router.HandleFunc("/article/headline", h.getHeadlineArticle).Methods("GET")
 	router.HandleFunc("/article/categories", h.getArticleByCategory).Methods("GET")
+	router.HandleFunc("/article/detail/{id}/{slug}", h.getDetailArticle).Methods("GET")
+}
+
+func (h *ArticleHandler) getDetailArticle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	id := params["id"]
+	slug := params["slug"]
+	fmt.Fprintln(w, "id: ", id)
+	fmt.Fprintln(w, "slug: ", slug)
 }
 
 func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) {
