@@ -42,3 +42,12 @@ type PostArticle struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
+
+type StoreArticle struct {
+	Title        string
+	Author       string
+	Category     string
+	ContentBody  string
+	Photo        string
+	Photographer string
+}

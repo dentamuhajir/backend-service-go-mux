@@ -25,6 +25,7 @@ func (h *ArticleHandler) RegisterRoute(router *mux.Router) {
 	router.HandleFunc("/article/headline", h.getHeadlineArticle).Methods("GET")
 	router.HandleFunc("/article/categories", h.getArticleByCategory).Methods("GET")
 	router.HandleFunc("/article/detail/{id}/{slug}", h.getDetailArticle).Methods("GET")
+	router.HandleFunc("/article/dummy-data", h.generateDummyData).Methods("GET")
 }
 
 func (h *ArticleHandler) getDetailArticle(w http.ResponseWriter, r *http.Request) {
@@ -75,4 +76,11 @@ func (h *ArticleHandler) getArticleByCategory(w http.ResponseWriter, r *http.Req
 	if error != nil {
 		log.Fatalf("Error handling JSON Encode: %v", err)
 	}
+}
+
+func (h *ArticleHandler) generateDummyData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	message := h.articleService.GenerateDummyData()
+	fmt.Fprintln(w, "message: ", message)
 }
