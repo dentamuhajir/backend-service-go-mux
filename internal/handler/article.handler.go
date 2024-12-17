@@ -8,7 +8,6 @@ import (
 
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/service"
 	"github.com/gorilla/mux"
-	"github.com/brianvoe/gofakeit/v7"
 )
 
 type ArticleHandler struct {
@@ -80,10 +79,8 @@ func (h *ArticleHandler) getArticleByCategory(w http.ResponseWriter, r *http.Req
 }
 
 func (h *ArticleHandler) generateDummyData(w http.ResponseWriter, r *http.Request) {
-	name := gofakeit.Name()
-	email := gofakeit.Email()          
-	phone := gofakeit.Phone()
-	company := gofakeit.Company()  
-	
-	fmt.Fprintln(w, name , email, phone, company)
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	message := h.articleService.GenerateDummyData()
+	fmt.Fprintln(w, "message: ", message)
 }

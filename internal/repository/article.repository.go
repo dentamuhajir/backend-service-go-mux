@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"log"
 
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/model"
 )
@@ -73,6 +74,24 @@ func (r *ArticleRepository) GetDetailArticle() ([]model.Article, error) {
 		articles = append(articles, article)
 	}
 	return articles, nil
+}
+
+func (r *ArticleRepository) SaveArticle(article model.StoreArticle) (message string) {
+
+	stmt, err := r.db.Prepare("INSERT INTO articles (id, title, author, category, content_body, photo, photographer, is_published) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(10001, article.Title, article.Author, article.Category, article.ContentBody, article.Photo, article.Photographer, true)
+
+	if err != nil {
+		log.Fatal(err)
+		return "Something bad happened on the server "
+	}
+
+	return "Success insert data"
 }
 
 func (r *ArticleRepository) GetArticleList() ([]model.Article, error) {
