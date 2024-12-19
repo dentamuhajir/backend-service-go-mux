@@ -57,3 +57,11 @@ Users/dentamuhajir/go
 -- Golang Model 
 Reference 
 https://dev.to/lucasnevespereira/write-a-rest-api-in-golang-following-best-practices-pe9
+
+-- Faker data
+Reference
+https://github.com/brianvoe/gofakeit?tab=readme-ov-file
+
+-- Insert Query
+Reference 
+https://stackoverflow.com/questions/66414376/golang-mysql-server-version-for-the-right-syntax-to-use-near-at-line-1
