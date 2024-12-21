@@ -22,14 +22,23 @@ func (s *ArticleService) GetListArticle() ([]model.Article, error) {
 	return s.articleRepository.GetArticleList()
 }
 
-func (s *ArticleService) GetListArticleGroupByCategory() (map[string][]model.Article, error) {
+func (s *ArticleService) GetListArticleGroupByCategory() ([]map[string]interface{}, error) {
 	articles, err := s.articleRepository.GetArticleList()
 	if err != nil {
 		return nil, err
 	}
-	collections := make(map[string][]model.Article)
+
+	grouped := make(map[string][]model.Article)
 	for _, article := range articles {
-		collections[article.Category] = append(collections[article.Category], article)
+		grouped[article.Category] = append(grouped[article.Category], article)
+	}
+
+	collections := []map[string]interface{}{}
+	for category, articleList := range grouped {
+		collections = append(collections, map[string]interface{}{
+			"category":    category,
+			"articleList": articleList,
+		})
 	}
 	return collections, nil
 }
