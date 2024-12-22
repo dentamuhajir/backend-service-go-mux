@@ -76,7 +76,6 @@ func (r *ArticleRepository) GetDetailArticle() ([]model.Article, error) {
 	return articles, nil
 }
 
-
 func (r *ArticleRepository) SaveArticle(article model.StoreArticle) (message string) {
 
 	stmt, err := r.db.Prepare("INSERT INTO articles (id, title, author, category, content_body, photo, photographer, is_published) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
