@@ -2,5 +2,5 @@
 run:
 	@go run cmd/main.go
 
-run-apps:
+Run-Apps:
 	@go run ./cmd
