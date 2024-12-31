@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/service"
 	"github.com/gorilla/mux"
@@ -31,10 +32,20 @@ func (h *ArticleHandler) RegisterRoute(router *mux.Router) {
 func (h *ArticleHandler) getDetailArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
-	id := params["id"]
-	slug := params["slug"]
-	fmt.Fprintln(w, "id: ", id)
-	fmt.Fprintln(w, "slug: ", slug)
+	// Convert string to int64
+	id, _ := strconv.ParseInt(params["id"], 10, 64)
+	articles, err := h.articleService.GetDetailArticle(id)
+
+	if err != nil {
+		log.Fatalf("error handling Article service. Err: %v", err)
+	}
+
+	error := json.NewEncoder(w).Encode(articles)
+
+	if error != nil {
+		log.Fatalf("error handling JSON Encode. Err: %v", err)
+	}
+
 }
 
 func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) {

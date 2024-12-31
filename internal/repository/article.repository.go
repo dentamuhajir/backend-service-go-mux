@@ -44,9 +44,9 @@ func (r *ArticleRepository) GetHeadlineArticle() ([]model.Article, error) {
 	return articles, nil
 }
 
-func (r *ArticleRepository) GetDetailArticle() ([]model.Article, error) {
-	query := "SELECT id, title, author, category, content_body, photo, photographer, published_date FROM articles"
-	rows, err := r.db.Query(query)
+func (r *ArticleRepository) GetDetailArticle(id int64) ([]model.Article, error) {
+	query := "SELECT id, title, author, category, content_body, photo, photographer, published_date FROM articles WHERE id = ?"
+	rows, err := r.db.Query(query, id)
 	if err != nil {
 		return nil, err
 	}
