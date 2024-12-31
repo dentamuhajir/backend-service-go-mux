@@ -43,6 +43,10 @@ func (s *ArticleService) GetListArticleGroupByCategory() ([]map[string]interface
 	return collections, nil
 }
 
+func (s *ArticleService) GetDetailArticle(id int64) ([]model.Article, error) {
+	return s.articleRepository.GetDetailArticle(id)
+}
+
 func (s *ArticleService) GetHeadlineArticle() ([]model.Article, error) {
 	return s.articleRepository.GetHeadlineArticle()
 }
