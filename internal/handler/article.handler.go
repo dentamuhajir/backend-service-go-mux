@@ -62,9 +62,14 @@ func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+type GenericResponse struct {
+	Status string          `json:"status"`
+	Data   json.RawMessage `json:"data"`
+}
+
 func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
 	articles, err := h.articleService.GetHeadlineArticle()
 	if err != nil {
 		log.Fatalf("error handling headline article. Err: %v", err)
