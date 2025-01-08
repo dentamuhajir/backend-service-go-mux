@@ -13,6 +13,12 @@ import (
 
 type ArticleHandler struct {
 	articleService service.ArticleService
+	GenericResponse
+}
+
+type GenericResponse struct {
+	Status string `json:"status"`
+	Data   any    `json:"data"`
 }
 
 func NewArticleHandler(s service.ArticleService) *ArticleHandler {
@@ -71,11 +77,15 @@ func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Reque
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*") 
 	articles, err := h.articleService.GetHeadlineArticle()
+
 	if err != nil {
 		log.Fatalf("error handling headline article. Err: %v", err)
 	}
 
-	error := json.NewEncoder(w).Encode(articles)
+	h.GenericResponse.Status = "Success"
+	h.GenericResponse.Data = articles
+
+	error := json.NewEncoder(w).Encode(h.GenericResponse)
 	if error != nil {
 		log.Fatalf("Error handling JSON Encode. Err: %v", err)
 	}
