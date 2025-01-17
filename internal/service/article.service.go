@@ -47,7 +47,7 @@ func (s *ArticleService) GetDetailArticle(id int64) ([]model.Article, error) {
 	return s.articleRepository.GetDetailArticle(id)
 }
 
-func (s *ArticleService) GetHeadlineArticle() ([]model.Article, error) {
+func (s *ArticleService) GetHeadlineArticle() ([]model.Headline, error) {
 	return s.articleRepository.GetHeadlineArticle()
 }
 
