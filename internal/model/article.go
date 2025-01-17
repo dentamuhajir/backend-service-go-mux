@@ -16,18 +16,12 @@ type Article struct {
 	// UpdatedAt     time.Time
 }
 
-type JsonArticle struct {
-	ID           int64
-	Title        string
-	Author       string
-	Category     string
-	ContentBody  string
-	Photo        string
-	Photographer string
-	//IsPublished   bool
-	PublishedDate time.Time
-	//CreatedAt     time.Time
-	//UpdatedAt     time.Time
+type Headline struct {
+	ID       int64  `json:"id"`
+	Title    string `json:"title"`
+	Author   string `json:"author"`
+	Category string `json:"category"`
+	Photo    string `json:"photo"`
 }
 
 type PostArticle struct {
