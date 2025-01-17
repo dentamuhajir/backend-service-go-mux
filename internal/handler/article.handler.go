@@ -18,6 +18,7 @@ type ArticleHandler struct {
 
 type GenericResponse struct {
 	Status string `json:"status"`
+	Code   int16  `json:"code"`
 	Data   any    `json:"data"`
 }
 
@@ -83,6 +84,7 @@ func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Reque
 	}
 
 	h.GenericResponse.Status = "Success"
+	h.GenericResponse.Code = 200
 	h.GenericResponse.Data = articles
 
 	error := json.NewEncoder(w).Encode(h.GenericResponse)
