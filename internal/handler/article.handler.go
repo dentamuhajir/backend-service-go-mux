@@ -69,14 +69,9 @@ func (h *ArticleHandler) getListArticle(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
-type GenericResponse struct {
-	Status string          `json:"status"`
-	Data   json.RawMessage `json:"data"`
-}
-
 func (h *ArticleHandler) getHeadlineArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	articles, err := h.articleService.GetHeadlineArticle()
 
 	if err != nil {
@@ -100,7 +95,12 @@ func (h *ArticleHandler) getArticleByCategory(w http.ResponseWriter, r *http.Req
 	if err != nil {
 		log.Fatalf("Error handling Article by categories. Err: %v", err)
 	}
-	error := json.NewEncoder(w).Encode(articles)
+
+	h.GenericResponse.Status = "Success"
+	h.GenericResponse.Code = 200
+	h.GenericResponse.Data = articles
+
+	error := json.NewEncoder(w).Encode(h.GenericResponse)
 	if error != nil {
 		log.Fatalf("Error handling JSON Encode: %v", err)
 	}
