@@ -18,7 +18,7 @@ func NewArticleService(r repository.ArticleRepository) *ArticleService {
 	}
 }
 
-func (s *ArticleService) GetListArticle() ([]model.Article, error) {
+func (s *ArticleService) GetListArticle() ([]model.ListArticle, error) {
 	return s.articleRepository.GetArticleList()
 }
 
@@ -28,7 +28,7 @@ func (s *ArticleService) GetListArticleGroupByCategory() ([]map[string]interface
 		return nil, err
 	}
 
-	grouped := make(map[string][]model.Article)
+	grouped := make(map[string][]model.ListArticle)
 	for _, article := range articles {
 		grouped[article.Category] = append(grouped[article.Category], article)
 	}
