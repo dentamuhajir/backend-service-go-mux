@@ -90,29 +90,22 @@ func (r *ArticleRepository) SaveArticle(article model.StoreArticle) (message str
 	return "Success insert data"
 }
 
-func (r *ArticleRepository) GetArticleList() ([]model.Article, error) {
-	query := "SELECT id, title, author, category, content_body, photo, photographer, published_date FROM articles"
+func (r *ArticleRepository) GetArticleList() ([]model.ListArticle, error) {
+	query := "SELECT id, title, category, photo FROM articles"
 	rows, err := r.db.Query(query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var articles []model.Article
+	var articles []model.ListArticle
 	for rows.Next() {
-		var article model.Article
+		var article model.ListArticle
 		err := rows.Scan(
 			&article.ID,
 			&article.Title,
-			&article.Author,
 			&article.Category,
-			&article.ContentBody,
 			&article.Photo,
-			&article.Photographer,
-			&article.PublishedDate,
-			//&article.IsPublished,
-			// &article.CreatedAt,
-			// &article.UpdatedAt,
 		)
 		if err != nil {
 			return nil, err
