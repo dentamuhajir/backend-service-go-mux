@@ -23,6 +23,13 @@ type Headline struct {
 	Photo    string `json:"photo"`
 }
 
+type ListArticle struct {
+	ID       int64  `json:"id"`
+	Title    string `json:"title"`
+	Category string `json:"category"`
+	Photo    string `json:"photo"`
+}
+
 type PostArticle struct {
 	Title         string `json:"title"`
 	Author        string
