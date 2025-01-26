@@ -8,6 +8,7 @@ import (
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/handler"
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/repository"
 	"github.com/dentamuhajir/backend-service-go-mysql/internal/service"
+
 	"github.com/gorilla/mux"
 )
 
@@ -29,9 +30,9 @@ func (s *APIServer) Start() error {
 
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
-	userRepository 	:= repository.NewUserRepository(s.db)
-	userService 	  := service.NewUserService(*userRepository)
-	userHandler 	  := handler.NewUserHandler(*userService)
+	userRepository := repository.NewUserRepository(s.db)
+	userService := service.NewUserService(*userRepository)
+	userHandler := handler.NewUserHandler(*userService)
 	userHandler.RegisterRoute(subrouter)
 
 	articleRepository := repository.NewArticleRepository(s.db)
