@@ -30,6 +30,11 @@ func (s *APIServer) Start() error {
 
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
+	commentRepository := repository.NewCommentRepository(s.db)
+	commentService := service.NewCommentService(*commentRepository)
+	commentHandler := handler.NewCommentHandler(*commentService)
+	commentHandler.RegisterRoute(subrouter)
+
 	userRepository := repository.NewUserRepository(s.db)
 	userService := service.NewUserService(*userRepository)
 	userHandler := handler.NewUserHandler(*userService)
